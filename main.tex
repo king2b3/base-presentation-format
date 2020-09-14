@@ -1,0 +1,174 @@
+\documentclass[handout]{beamer}
+
+% Choose how your presentation looks.
+%
+% For more themes, color themes and font themes, see:
+% http://deic.uab.es/~iblanes/beamer_gallery/index_by_theme.html
+%
+\mode<presentation>
+{
+  \usetheme{CambridgeUS} %JuanLesPins}      % or try Darmstadt, Madrid, Warsaw, ...
+  \usecolortheme{beaver} % or try albatross, beaver, crane, ...
+  \usefonttheme{serif}  % or try serif, structurebold, ...
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+} 
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+%\usepackage{wrapfig}
+%\usepackage{graphicx}
+%\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{listings}
+
+
+\title[DAGSI Update - RY9-UC-20-4]{Adaptable Protection for Embedded Systems Resilience}
+\subtitle{ARFL Presentation - Fall 2020}
+\author[B. King \& R. Jha]
+       {\parbox[t]{1.5in}{Bayley King\\Graduate Student\\\texttt{king2b3@mail.uc.edu}} \and 
+        \parbox[t]{1.5in}{Rashmi Jha\\Advisor\\ \texttt{Rashmi.jha@uc.edu}}}
+%\institute{MIND Lab \newline
+%University Of Cincinnati}
+\institute[UC]{MIND Lab \and University of Cincinnati}
+
+\date{September 4, 2020}
+\logo{\includegraphics[height=1.5cm]{Images/ucLogo.png}}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% Uncomment these lines for an automatically generated outline.
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+% Define what happens after each section after the Introduction section.
+\iffalse
+\AtBeginSection[] {
+  \begin{frame}<beamer>
+  \frametitle{Outline}
+  \tableofcontents[currentsection, currentsubsection]
+  \end{frame}
+}
+\fi
+
+
+\newcommand{\lenitem}[2][.85\linewidth]{\parbox[t]{#1}{\strut #2\strut}}
+\begin{frame}{Differences Between GA and HereBoy for Genetic Programming}
+\begin{itemize}
+  \item Population Function
+  \begin{itemize}
+    \item GA initializes a population of randomly generated ASTs
+    \item HereBOY uses only a single ASTs
+  \end{itemize}
+  \item Fitness Function
+  \begin{itemize}
+    \item Each circuit is scored off of their logical functionality 
+    \item Each node in the AST is scored individually, by seeing which modification to that node would give the highest overall fitness
+  \end{itemize}
+  \item Selection Function
+  \begin{itemize}
+    \item The best preforming individuals of the population are selected for re-population
+    \item The modification that offers the highest overall fitness is selected
+  \end{itemize}
+  \item Mutation Function
+  \begin{itemize}
+    \item \lenitem{The highest preforming individuals are then mutated to generate a new population}
+    \item \lenitem{The new AST is formed by implementing the modification selected in the past stage}
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{Work Completed}
+
+
+% single figure slide
+%\begin{frame} 
+%  \begin{figure}
+%    \includegraphics[width=\textwidth]{Images/uml.png}
+%  \end{figure}
+%\end{frame}
+
+
+
+\iffalse  % multiline comment
+% Example of using listing for code 
+\defverbatim[colored]\lstI{
+\begin{lstlisting}[language=Verilog,basicstyle=\ttfamily,keywordstyle=\color{red}]
+  module  main(X, Y, Z, O);
+  input X, Y, Z ;
+  output O;
+  wire  O;
+  assign O =~ (X & Y) | (Y & Z) | (X & Z);
+  
+  endmodule
+
+  [<HdlBuiltinFn.OR: 24>(<HdlBuiltinFn.OR: 
+  24>(<HdlBuiltinFn.NEG: 20>(<HdlBuiltinFn.AND: 
+  23>('X', 'Y')), <HdlBuiltinFn.AND: 23>('Y', 'Z')), 
+  <HdlBuiltinFn.AND: 23>('X', 'Z'))]
+\end{lstlisting}
+}
+
+\begin{frame}{Verilog to AST}
+\lstI
+\end{frame}
+% end of example of listing for code
+
+% example of listing for normal usage
+\defverbatim[colored]\lstI{
+\begin{lstlisting}[language=C++,basicstyle=\ttfamily,keywordstyle=\color{red}]
+  s a v e -  -  -	   s a - v -  - e
+  s a l v a  g  e	   s a l v a  g e 
+      5 steps		       3 steps
+  naive comparison       Levenshtein distance
+\end{lstlisting}
+}
+
+\begin{frame}{Levenshtein Distance}
+\lstI
+\end{frame}
+
+\fi
+
+\section{Conclusions}
+\begin{frame}{Current Issues}
+  \begin{itemize}
+    \item Fix structural fitness
+    \item Mutations currently only work for 2-terminal logical feature (AND OR)
+    \item Implement other logical gates (MIN, MAX, XOR, etc)
+    \begin{itemize}
+      \item hdlConvertor seems to have 27 different functions
+    \end{itemize}
+    \item Get each function working together properly
+    \item hdlConvertor seems to be going through a fundamental rework, I'm having to manually input each AST to run tests
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Plan for the Rest of the Semester}
+  \begin{itemize}
+    \item Start testing out scalability  larger circuits
+    \begin{itemize}
+      \item Will the system need to be modified to work for larger circuits?
+    \end{itemize}
+    \item Get code onto FPGA
+    \item Looking for HOST 2021 submission deadline in March 21
+  \end{itemize}
+\end{frame}
+  
+  \begin{frame}{References}
+    \begin{itemize}
+      \item [1] Zhang K. and Shasha D., “Simple fast algorithms for the editing
+      distance between trees and related problems” SIMA J. Comput.,
+      18(6):1245– 1262, 1989 \newline
+      \item [2]Xu H., “An Algorithm for Comparing Similarity Between Two Trees”. ArXiv:1508.03381v1, 2014
+    \end{itemize}
+  \end{frame}
+
+
+\end{document}
